@@ -19,31 +19,28 @@ jobs:
       with:
           version: 1.2.0
     
-    - name: Alias terraform
-      run: export $TF="terraform --chdir=tf"
-    
     - name: Terraform Format
       id: fmt
-      run: $TF fmt -check
+      run: terraform --chdir=tf fmt -check
 
     - name: Terraform Init
       id: init
-      run: $TF init
+      run: terraform --chdir=tf init
     
     - name: Terraform Validate
       id: validate
-      run: $TF validate -no-color
+      run: terraform --chdir=tf validate -no-color
 
     - name: Terraform Plan
       id: plan
       if: github.event_name == 'pull_request'
-      run: $TF plan -no-color -input=false
+      run: terraform --chdir=tf plan -no-color -input=false
       continue-on-error: true
 
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
-        PLAN: "$TF \n${{ steps.plan.outputs.stdout }}"
+        PLAN: "terraform --chdir=tf \n${{ steps.plan.outputs.stdout }}"
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -69,4 +66,4 @@ jobs:
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: $TF apply -auto-approve -input=false
+      run: terraform --chdir=tf apply -auto-approve -input=false
