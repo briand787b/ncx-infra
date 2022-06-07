@@ -5,17 +5,16 @@ terraform {
       version = "4.23.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "ncx-auto-tf-state"
+  }
 }
 
 provider "google" {
-  # credentials = var.credentials_path
   project = var.project_id
   region  = var.region
 }
-
-# variable "credentials_path" {
-#   description = "path to sa credentials file"
-# }
 
 variable "project_id" {
   description = "project id"
