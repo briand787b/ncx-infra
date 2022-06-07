@@ -8,14 +8,13 @@ terraform {
 }
 
 provider "google" {
-  credentials = "${var.credentials_path}"
-  project     = "${var.project_id}"
-  region      = "${var.region}"
+  credentials = var.credentials_path
+  project     = var.project_id
+  region      = var.region
 }
 
 variable "credentials_path" {
   description = "path to sa credentials file"
-  default = "/home/scot/Downloads/ncx-man-sa.json"
 }
 
 variable "project_id" {
