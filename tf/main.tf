@@ -13,9 +13,9 @@ provider "google" {
   region  = var.region
 }
 
-variable "credentials_path" {
-  description = "path to sa credentials file"
-}
+# variable "credentials_path" {
+#   description = "path to sa credentials file"
+# }
 
 variable "project_id" {
   description = "project id"
