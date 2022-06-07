@@ -9,7 +9,6 @@ on:
 env:
   TF_VAR_project_id: ncx-auto
   TF_VAR_region: us-east1
-  TF_VAR_credentials_path: sa_credentials.json
     
 jobs:
   build:
@@ -37,9 +36,6 @@ jobs:
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v0'
-      
-    - name: Create SA Credentials File
-      run: echo ${{ secrets.GCLOUD_TOKEN }} > sa_credentials.json
 
     - name: Terraform Init
       id: init
