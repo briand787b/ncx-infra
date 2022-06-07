@@ -20,10 +20,7 @@ jobs:
           version: 1.2.0
     
     - name: Alias terraform
-      run: |-
-        # shopt -s expand_aliases
-        # alias tf='terraform --chdir=tf'
-        export $TF="terraform --chdir=tf"
+      run: export $TF="terraform --chdir=tf"
     
     - name: Terraform Format
       id: fmt
