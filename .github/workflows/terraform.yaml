@@ -21,31 +21,32 @@ jobs:
     
     - name: Alias terraform
       run: |-
-        shopt -s expand_aliases
-        alias tf='terraform --chdir=tf'
+        # shopt -s expand_aliases
+        # alias tf='terraform --chdir=tf'
+        export $TF="terraform --chdir=tf"
     
     - name: Terraform Format
       id: fmt
-      run: tf fmt -check
+      run: $TF fmt -check
 
     - name: Terraform Init
       id: init
-      run: tf init
+      run: $TF init
     
     - name: Terraform Validate
       id: validate
-      run: tf validate -no-color
+      run: $TF validate -no-color
 
     - name: Terraform Plan
       id: plan
       if: github.event_name == 'pull_request'
-      run: tf plan -no-color -input=false
+      run: $TF plan -no-color -input=false
       continue-on-error: true
 
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
-        PLAN: "tf \n${{ steps.plan.outputs.stdout }}"
+        PLAN: "$TF \n${{ steps.plan.outputs.stdout }}"
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -71,4 +72,4 @@ jobs:
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: tf apply -auto-approve -input=false
+      run: $TF apply -auto-approve -input=false
