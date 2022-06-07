@@ -5,12 +5,15 @@ terraform {
       version = "4.23.0"
     }
   }
+
+  backend "gcs" {
+    bucket = "ncx-auto-tf-state"
+  }
 }
 
 provider "google" {
-  credentials = "/home/scot/Downloads/ncx-man-sa.json"
-  project     = "ncx-man"
-  region      = "us-east1"
+  project = var.project_id
+  region  = var.region
 }
 
 variable "project_id" {
