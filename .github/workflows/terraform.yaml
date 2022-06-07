@@ -13,12 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Install Terraform
       uses: little-core-labs/install-terraform@v2.0.0
       with:
           version: 1.2.0
+    
     - name: Alias terraform
-      run: alias tf='terraform --chdir=tf'
+      run: |-
+        shopt -s expand_aliases
+        alias tf='terraform --chdir=tf'
+    
     - name: Terraform Format
       id: fmt
       run: tf fmt -check
