@@ -25,6 +25,9 @@ jobs:
       id: fmt
       run: terraform fmt -check
 
+    - name: prove gh secrets are accessible
+      run: echo ${{ secrets.NOT_A_SECRET }}
+
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
       with:
