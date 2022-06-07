@@ -13,34 +13,34 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Change Directory
-      run: cd tf/
     - name: Install Terraform
       uses: little-core-labs/install-terraform@v2.0.0
       with:
           version: 1.2.0
+    - name: Alias terraform
+      run: alias tf='terraform --chdir=tf'
     - name: Terraform Format
       id: fmt
-      run: terraform fmt -check
+      run: tf fmt -check
 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: tf init
     
     - name: Terraform Validate
       id: validate
-      run: terraform validate -no-color
+      run: tf validate -no-color
 
     - name: Terraform Plan
       id: plan
       if: github.event_name == 'pull_request'
-      run: terraform plan -no-color -input=false
+      run: tf plan -no-color -input=false
       continue-on-error: true
 
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
-        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        PLAN: "tf \n${{ steps.plan.outputs.stdout }}"
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -66,4 +66,4 @@ jobs:
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+      run: tf apply -auto-approve -input=false
