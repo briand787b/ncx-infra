@@ -1,0 +1,6 @@
+dependencies:
+- name: nats
+  repository: https://charts.bitnami.com/bitnami
+  version: 7.3.2
+digest: sha256:f98cf3d41236db431c10537b6504f2e0a8dc1fd6eb61bfeedc859303197a2ba5
+generated: "2022-06-04T18:27:44.341519-04:00"

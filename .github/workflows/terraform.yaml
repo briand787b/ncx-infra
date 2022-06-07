@@ -1,0 +1,20 @@
+name: Example installing Terraform
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Terraform
+      uses: little-core-labs/install-terraform@v2.0.0
+      with:
+          version: 1.2.0
+    - name: Terraform NOT apply
+      run: |
+        terraform init
+        terraform plan
+        # terraform apply -auto-approve
