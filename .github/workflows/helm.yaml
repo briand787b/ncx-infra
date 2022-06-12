@@ -1,0 +1,37 @@
+name: Helm
+on:
+  push:
+    paths:
+      - 'charts/**'
+      - .github/workflows/helm.yaml
+    branches:
+      - master
+  pull_request:
+    paths:
+      - 'charts/**'
+      - .github/workflows/helm.yaml
+    
+jobs:
+  ncx-pos:
+    runs-on: 'ubuntu-latest'
+    env:
+      NAMESPACE: store
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Helm Lint
+        id: lint
+        run: helm lint ./charts/ncx-pos/ --namespace $NAMESPACE
+
+      - name: Helm Lint Status
+        if: steps.lint.outcome == 'failure'
+        run: exit 1
+
+      - name: Helm Deploy
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: WyriHaximus/github-action-helm3@v2.0
+        with:
+          exec: >
+            helm upgrade ncx-pos ./charts/ncx-pos/ --install --wait --atomic 
+            --namespace $NAMESPACE --create-namespace
+          kubeconfig: '${{ secrets.KUBECONFIG }}'

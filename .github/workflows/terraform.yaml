@@ -1,10 +1,16 @@
-name: Terraform CI
+name: Terraform
 
 on: 
   push:
+    paths:
+      - 'tf/**'
+      - .github/workflows/terraform.yaml
     branches:
       - master
   pull_request:
+    paths:
+      - 'tf/**'
+      - .github/workflows/terraform.yaml
 
 env:
   TF_VAR_project_id: ncx-auto
