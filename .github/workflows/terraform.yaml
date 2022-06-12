@@ -1,10 +1,14 @@
-name: Terraform CI
+name: Terraform
 
 on: 
   push:
+    paths:
+      - tf/
     branches:
       - master
   pull_request:
+    paths:
+      - tf/
 
 env:
   TF_VAR_project_id: ncx-auto

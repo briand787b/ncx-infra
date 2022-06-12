@@ -1,9 +1,13 @@
-name: Deploy
+name: Helm
 on:
   push:
+    paths:
+      - charts/
     branches:
       - master
   pull_request:
+    paths:
+      - charts/
     
 jobs:
   ncx-pos:
