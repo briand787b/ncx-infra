@@ -3,12 +3,14 @@ name: Terraform
 on: 
   push:
     paths:
-      - tf/
+      - 'tf/**'
+      - .github/workflows/terraform.yaml
     branches:
       - master
   pull_request:
     paths:
-      - tf/
+      - 'tf/**'
+      - .github/workflows/terraform.yaml
 
 env:
   TF_VAR_project_id: ncx-auto

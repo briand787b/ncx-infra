@@ -2,12 +2,14 @@ name: Helm
 on:
   push:
     paths:
-      - charts/
+      - 'charts/**'
+      - .github/workflows/helm.yaml
     branches:
       - master
   pull_request:
     paths:
-      - charts/
+      - 'charts/**'
+      - .github/workflows/helm.yaml
     
 jobs:
   ncx-pos:
