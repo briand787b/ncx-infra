@@ -2,6 +2,9 @@ name: Reusable Helm
 on:
   workflow_call:
     inputs:
+      chart-path:
+        required: true
+        type: string
       release:
         required: true
         type: string
@@ -25,7 +28,7 @@ jobs:
 
       - name: Helm Lint
         id: lint
-        run: helm lint ./charts/ncx-pos/ --namespace ${{ inputs.namespace }}
+        run: helm lint ${{ inputes.chart-path }} --namespace ${{ inputs.namespace }}
 
       - name: Helm Lint Status
         if: steps.lint.outcome == 'failure'
@@ -53,5 +56,5 @@ jobs:
 
       - name: Helm Deploy
         run: >
-          helm upgrade ${{ inputs.release }} ./charts/ncx-pos/ --install --wait
+          helm upgrade ${{ inputs.release }} ${{ inputes.chart-path }} --install --wait
           --atomic --namespace ${{ inputs.namespace }} --create-namespace
