@@ -1,0 +1,58 @@
+name: Reusable Helm
+on:
+  workflow_call:
+    inputs:
+      namespace:
+        required: true
+        type: string
+      cluster:
+        required: true
+        type: string
+      cluster-zone:
+        required: true
+        type: string
+    secrets:
+      gcloud-token:
+        required: true
+jobs:
+  lint: 
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Helm Lint
+        id: lint
+        run: helm lint ./charts/ncx-pos/ --namespace $NAMESPACE
+
+      - name: Helm Lint Status
+        if: steps.lint.outcome == 'failure'
+        run: exit 1
+
+  deploy:
+    needs: lint
+    if: github.event_name == 'push'
+    env:
+      NAMESPACE: store
+      CLUSTER: ncx-auto-gke
+      CLUSTER_ZONE: us-east1
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Authenticate GCloud
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: ${{ secrets.gcloud-token }}
+
+      - name: Set up GCloud SDK
+        uses: 'google-github-actions/setup-gcloud@v0'
+
+      - name: Set up Kubectl
+        run: >
+          gcloud container clusters get-credentials ${{ inputs.cluster }}
+          --zone ${{ inputs.cluster-zone }}
+
+      - name: Helm Deploy
+        run: >
+          helm upgrade ncx-pos ./charts/ncx-pos/ --install --wait --atomic 
+          --namespace ${{ inputs.namespace }} --create-namespace

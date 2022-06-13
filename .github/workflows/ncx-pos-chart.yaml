@@ -1,0 +1,25 @@
+name: Helm
+on:
+  push:
+    paths:
+      - 'charts/ncx-pos/**'
+      - .github/workflows/helm.yaml
+      - .github/workflows/ncx-pos-chart.yaml
+    branches:
+      - master
+  pull_request:
+    paths:
+      - 'charts/ncx-pos/**'
+      - .github/workflows/helm.yaml
+      - .github/workflows/ncx-pos-chart.yaml
+
+jobs:
+  call_reusable_helm_workflow:
+    uses: briand787b/ncx-infra/.github/workflows/reusable_helm.yaml
+    with:
+      namespace: ncx-auto
+      cluster: ncx-auto-gke
+      cluster-zone: us-east1
+    secrets:
+      gcloud-token: ${{ secrets.GCLOUD_TOKEN }}
+    
