@@ -33,7 +33,7 @@ jobs:
         if: github.event_name != 'push'
         run: exit 0
 
-      - id: Authenticate GCloud
+      - name: Authenticate GCloud
         uses: 'google-github-actions/auth@v0'
         with:
           credentials_json: ${{ secrets.GCLOUD_TOKEN }}
