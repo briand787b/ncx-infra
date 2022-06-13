@@ -28,7 +28,7 @@ jobs:
 
       - name: Helm Lint
         id: lint
-        run: helm lint ${{ inputes.chart-path }} --namespace ${{ inputs.namespace }}
+        run: helm lint ${{ inputs.chart-path }} --namespace ${{ inputs.namespace }}
 
       - name: Helm Lint Status
         if: steps.lint.outcome == 'failure'
@@ -56,5 +56,5 @@ jobs:
 
       - name: Helm Deploy
         run: >
-          helm upgrade ${{ inputs.release }} ${{ inputes.chart-path }} --install --wait
+          helm upgrade ${{ inputs.release }} ${{ inputs.chart-path }} --install --wait
           --atomic --namespace ${{ inputs.namespace }} --create-namespace
