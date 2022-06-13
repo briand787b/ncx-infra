@@ -13,9 +13,14 @@ on:
     
 jobs:
   ncx-pos:
+    # defaults:
+    #   run:
+    #     working-directory: 
     runs-on: 'ubuntu-latest'
     env:
       NAMESPACE: store
+      CLUSTER: ncx-auto-gke
+      CLUSTER_ZONE: us-east1
     steps:
       - uses: actions/checkout@v3
 
@@ -26,6 +31,12 @@ jobs:
       - name: Helm Lint Status
         if: steps.lint.outcome == 'failure'
         run: exit 1
+
+      - name: PWD
+        run: ls -la
+
+      - name: Is helm installed already?
+        run: helm version
 
       # # TODO: DELETE ME
       # - name: CI Stop
@@ -40,8 +51,8 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v0'
 
-      - name: Troubleshoot KubeCtl
-        run: kubectl get pods -A
+      - name: Setup Kubectl
+        run: gcloud container clusters get-credentials $CLUSTER --zone $CLUSTER_ZONE
 
       - name: Helm Deploy
         # if: github.ref == 'refs/heads/master' && github.event_name == 'push'
@@ -50,4 +61,4 @@ jobs:
           exec: >
             helm upgrade ncx-pos ./charts/ncx-pos/ --install --wait --atomic 
             --namespace $NAMESPACE --create-namespace
-          kubeconfig: '${{ secrets.KUBECONFIG }}'
+          kubeconfig: fake value
