@@ -1,17 +1,17 @@
-name: NCX PoS Chart
+name: NCX IDE Chart
 on:
   push:
     paths:
-      - 'charts/ncx-pos/**'
+      - 'charts/ncx-ide/**'
       - .github/workflows/reusable-helm.yaml
-      - .github/workflows/ncx-pos-chart.yaml
+      - .github/workflows/ncx-ide-chart.yaml
     branches:
       - master
   pull_request:
     paths:
-      - 'charts/ncx-pos/**'
+      - 'charts/ncx-ide/**'
       - .github/workflows/reusable-helm.yaml
-      - .github/workflows/ncx-pos-chart.yaml
+      - .github/workflows/ncx-ide-chart.yaml
 
 jobs:
   helm:
