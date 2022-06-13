@@ -2,6 +2,9 @@ name: Reusable Helm
 on:
   workflow_call:
     inputs:
+      release:
+        required: true
+        type: string
       namespace:
         required: true
         type: string
@@ -31,10 +34,6 @@ jobs:
   deploy:
     needs: lint
     if: github.event_name == 'push'
-    env:
-      NAMESPACE: store
-      CLUSTER: ncx-auto-gke
-      CLUSTER_ZONE: us-east1
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
@@ -54,5 +53,5 @@ jobs:
 
       - name: Helm Deploy
         run: >
-          helm upgrade ncx-pos ./charts/ncx-pos/ --install --wait --atomic 
-          --namespace ${{ inputs.namespace }} --create-namespace
+          helm upgrade ${{ inputes.release }} ./charts/ncx-pos/ --install --wait
+          --atomic --namespace ${{ inputs.namespace }} --create-namespace
