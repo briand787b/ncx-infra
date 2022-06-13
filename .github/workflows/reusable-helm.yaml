@@ -53,5 +53,9 @@ jobs:
 
       - name: Helm Deploy
         run: >
+<<<<<<< Updated upstream
           helm upgrade ${{ inputes.release }} ./charts/ncx-pos/ --install --wait
+=======
+          helm upgrade ${{ inputs.release }} ./charts/ncx-pos/ --install --wait
+>>>>>>> Stashed changes
           --atomic --namespace ${{ inputs.namespace }} --create-namespace
