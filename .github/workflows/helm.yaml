@@ -33,7 +33,7 @@ jobs:
         run: exit 1
 
       - name: PWD
-        run: ls -la
+        run: pwd
 
       - name: Is helm installed already?
         run: helm version
@@ -56,9 +56,6 @@ jobs:
 
       - name: Helm Deploy
         # if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        uses: WyriHaximus/github-action-helm3@v2.0
-        with:
-          exec: >
-            helm upgrade ncx-pos ./charts/ncx-pos/ --install --wait --atomic 
-            --namespace $NAMESPACE --create-namespace
-          kubeconfig: fake value
+        run: >
+          helm upgrade ncx-pos ./charts/ncx-pos/ --install --wait --atomic 
+          --namespace $NAMESPACE --create-namespace
