@@ -27,12 +27,20 @@ spec:
       serviceAccountName: {{ include "ncx-ide.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: configjs-vol
+          configMap:
+            name: {{ include "ncx-ide.fullname" . }}-configjs
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: configjs-vol
+              mountPath: /usr/share/nginx/html/config.js
+              subPath: config.js
           ports:
             - name: http
               containerPort: 80
