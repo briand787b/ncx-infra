@@ -3,6 +3,13 @@ local-install:
 	helm upgrade -i -n store --create-namespace --wait pos ./charts/ncx-pos
 	helm upgrade -i -n store --create-namespace --wait ide ./charts/ncx-ide
 
+local-upgrade-gateway:
+	-helm -n store uninstall gateway
+	helm upgrade -i -n store --create-namespace --wait \
+	--set "image.repository=localhost:32000/briand787b/ncx-gateway" \
+	--set "image.tag=latest" \
+	gateway ./charts/ncx-gateway
+
 local-upgrade-ide:
 	-helm -n store uninstall ide
 	helm upgrade -i -n store --create-namespace --wait \
