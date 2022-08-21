@@ -1,24 +1,24 @@
-name: NCX Gateway Chart
+name: NCX Gateway-Web Chart
 on:
   push:
     paths:
-      - 'charts/ncx-gateway/**'
+      - 'charts/ncx-gateway-web/**'
       - .github/workflows/reusable-helm.yaml
-      - .github/workflows/ncx-gateway-chart.yaml
+      - .github/workflows/ncx-gateway-web-chart.yaml
     branches:
       - master
   pull_request:
     paths:
-      - 'charts/ncx-gateway/**'
+      - 'charts/ncx-gateway-web/**'
       - .github/workflows/reusable-helm.yaml
-      - .github/workflows/ncx-gateway-chart.yaml
+      - .github/workflows/ncx-gateway-web-chart.yaml
 
 jobs:
   helm:
     uses: briand787b/ncx-infra/.github/workflows/reusable-helm.yaml@master
     with:
-      chart-path: 'charts/ncx-gateway'
-      release: ncx-gateway
+      chart-path: 'charts/ncx-gateway-web'
+      release: ncx-gateway-web
       namespace: store
       cluster: ncx-auto-gke
       cluster-zone: us-east1
