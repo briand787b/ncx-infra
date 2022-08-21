@@ -1,14 +1,14 @@
-# Default values for ncx-gateway.
+# Default values for ncx-gateway-store.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: ghcr.io/briand787b/ncx-gateway
+  repository: ghcr.io/briand787b/ncx-gateway-store
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "a79ec99c" 
+  tag: "79314219" 
 
 imagePullSecrets: []
 nameOverride: ""

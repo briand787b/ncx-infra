@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "ncx-gateway.fullname" . }}
+  name: {{ include "ncx-gateway-store.fullname" . }}
   labels:
-    {{- include "ncx-gateway.labels" . | nindent 4 }}
+    {{- include "ncx-gateway-store.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "ncx-gateway.fullname" . }}
+    name: {{ include "ncx-gateway-store.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

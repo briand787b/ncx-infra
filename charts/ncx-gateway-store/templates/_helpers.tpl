@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "ncx-gateway.name" -}}
+{{- define "ncx-gateway-store.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "ncx-gateway.fullname" -}}
+{{- define "ncx-gateway-store.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "ncx-gateway.chart" -}}
+{{- define "ncx-gateway-store.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "ncx-gateway.labels" -}}
-helm.sh/chart: {{ include "ncx-gateway.chart" . }}
-{{ include "ncx-gateway.selectorLabels" . }}
+{{- define "ncx-gateway-store.labels" -}}
+helm.sh/chart: {{ include "ncx-gateway-store.chart" . }}
+{{ include "ncx-gateway-store.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "ncx-gateway.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ncx-gateway.name" . }}
+{{- define "ncx-gateway-store.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "ncx-gateway-store.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "ncx-gateway.serviceAccountName" -}}
+{{- define "ncx-gateway-store.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "ncx-gateway.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "ncx-gateway-store.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
