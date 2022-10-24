@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/briand787b/ncx-pos
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "9edf3a94" 
+  tag: "0801142b" 
 
 imagePullSecrets: []
 nameOverride: ""
